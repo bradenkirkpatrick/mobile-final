@@ -1,0 +1,7 @@
+TEAM_ID=
+
+PRODUCT_NAME=MobileFinal
+PRODUCT_BUNDLE_IDENTIFIER=moravian.mobileclass.mobilefinal.MobileFinal$(TEAM_ID)
+
+CURRENT_PROJECT_VERSION=1
+MARKETING_VERSION=1.0
