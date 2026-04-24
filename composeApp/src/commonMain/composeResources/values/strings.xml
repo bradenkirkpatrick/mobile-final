@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_photos">Photos</string>
+    <string name="nav_home_icon">🏠</string>
+    <string name="nav_photos_icon">📷</string>
+
+    <!-- Home Screen -->
+    <string name="home_button">Click me!</string>
+
+    <!-- Photo Screen -->
+    <string name="photos_title">Photos</string>
+    <string name="photo_caption">Photo %1$d</string>
+    <string name="photos_empty_title">No Photos Found</string>
+    <string name="photos_empty_message">Your library appears empty, or photos are unavailable right now.</string>
+    <string name="photos_unsupported_title">Photos Unavailable</string>
+    <string name="photos_unsupported_message">Photo library display is not configured for this platform build yet.</string>
+
+    <!-- Permission Prompt -->
+    <string name="permission_icon">📷</string>
+    <string name="permission_title">Photo Access Needed</string>
+    <string name="permission_rationale">Please grant permission to view your photos.</string>
+    <string name="permission_button">Grant Permission</string>
+</resources>
