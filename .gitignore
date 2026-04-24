@@ -1,5 +1,19 @@
 /.gradle/
 /build/
 **/build/
+gradle/wrapper/
+gradlew.bat
 
+# macOS
+.DS_Store
+**/.DS_Store
 
+# Kotlin metadata cache
+.kotlin/
+
+# Android generated assets
+composeApp/src/androidMain/res/mipmap-xhdpi/ic_launcher.png
+composeApp/src/androidMain/res/mipmap-xxxhdpi/ic_launcher_round.png
+
+# iOS generated assets
+iosApp/iosApp/Assets.xcassets/AppIcon.appiconset/
