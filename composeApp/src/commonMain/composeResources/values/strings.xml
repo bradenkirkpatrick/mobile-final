@@ -17,6 +17,15 @@
     <string name="photos_unsupported_title">Photos Unavailable</string>
     <string name="photos_unsupported_message">Photo library display is not configured for this platform build yet.</string>
 
+    <!-- Camera Screen -->
+    <string name="nav_camera">Camera</string>
+    <string name="nav_camera_icon">📸</string>
+    <string name="camera_title">Take a Photo</string>
+    <string name="camera_capture_button">Capture</string>
+    <string name="camera_permission_title">Camera Access Needed</string>
+    <string name="camera_permission_rationale">Please grant permission to use the camera.</string>
+    <string name="camera_permission_button">Grant Permission</string>
+
     <!-- Permission Prompt -->
     <string name="permission_icon">📷</string>
     <string name="permission_title">Photo Access Needed</string>

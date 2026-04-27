@@ -3,6 +3,7 @@ package moravian.mobileclass.mobilefinal
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -37,9 +38,7 @@ import kotlinx.coroutines.withContext
 import mobilefinal.composeapp.generated.resources.Res
 import mobilefinal.composeapp.generated.resources.photos_empty_message
 import mobilefinal.composeapp.generated.resources.photos_empty_title
-import mobilefinal.composeapp.generated.resources.photos_title
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.skia.Image as SkiaImage
 import platform.CoreGraphics.CGSizeMake
 import platform.Foundation.NSData
 import platform.Photos.PHAsset
@@ -52,8 +51,12 @@ import platform.Photos.PHImageRequestOptionsResizeModeFast
 import platform.UIKit.UIImagePNGRepresentation
 import platform.posix.memcpy
 import kotlin.coroutines.resume
+import org.jetbrains.skia.Image as SkiaImage
 
-private data class IosPhoto(val id: String, val asset: PHAsset)
+private data class IosPhoto(
+    val id: String,
+    val asset: PHAsset,
+)
 
 private val imageManager = PHCachingImageManager()
 
@@ -64,50 +67,46 @@ actual fun PlatformPhotoGrid() {
     }
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .safeContentPadding(),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+                .safeContentPadding(),
     ) {
-        Text(
-            text = stringResource(Res.string.photos_title),
-            style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            textAlign = TextAlign.Center
-        )
-
         if (photos.isEmpty()) {
             Column(
                 modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center
+                verticalArrangement = Arrangement.Center,
             ) {
                 Text(
                     text = stringResource(Res.string.photos_empty_title),
                     style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
                 )
                 Text(
                     text = stringResource(Res.string.photos_empty_message),
                     style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 8.dp, start = 24.dp, end = 24.dp),
-                    textAlign = TextAlign.Center
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(top = 8.dp, start = 24.dp, end = 24.dp),
+                    textAlign = TextAlign.Center,
                 )
             }
         } else {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(3),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-                modifier = Modifier.fillMaxSize()
-            ) {
-                items(photos, key = { it.id }) { photo ->
-                    IosPhotoTile(photo)
+            BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+                val columns = if (maxWidth > maxHeight) 4 else 3
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(columns),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+                    modifier = Modifier.fillMaxSize(),
+                ) {
+                    items(photos, key = { it.id }) { photo ->
+                        IosPhotoTile(photo)
+                    }
                 }
             }
         }
@@ -123,69 +122,76 @@ private fun IosPhotoTile(photo: IosPhoto) {
     Card(
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(110.dp)
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .height(110.dp),
     ) {
         if (thumbnail != null) {
             Image(
                 bitmap = thumbnail!!,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .clip(RoundedCornerShape(12.dp))
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .clip(RoundedCornerShape(12.dp)),
             )
         }
     }
 }
 
 @OptIn(ExperimentalForeignApi::class)
-private suspend fun loadIosPhotos(): List<IosPhoto> = withContext(Dispatchers.Default) {
-    val assets = PHAsset.fetchAssetsWithMediaType(PHAssetMediaTypeImage, options = null)
-    val maxCount = minOf(assets.count().toInt(), 150)
-    val photos = ArrayList<IosPhoto>(maxCount)
+private suspend fun loadIosPhotos(): List<IosPhoto> =
+    withContext(Dispatchers.Default) {
+        val assets = PHAsset.fetchAssetsWithMediaType(PHAssetMediaTypeImage, options = null)
+        val maxCount = minOf(assets.count().toInt(), 150)
+        val photos = ArrayList<IosPhoto>(maxCount)
 
-    for (index in 0 until maxCount) {
-        val asset = assets.objectAtIndex(index.toULong()) as? PHAsset ?: continue
-        photos.add(IosPhoto(id = asset.localIdentifier, asset = asset))
+        for (index in 0 until maxCount) {
+            val asset = assets.objectAtIndex(index.toULong()) as? PHAsset ?: continue
+            photos.add(IosPhoto(id = asset.localIdentifier, asset = asset))
+        }
+
+        photos
     }
-
-    photos
-}
 
 @OptIn(ExperimentalForeignApi::class)
-private suspend fun loadIosThumbnail(asset: PHAsset): ImageBitmap? = withContext(Dispatchers.Default) {
-    suspendCancellableCoroutine { continuation ->
-        val requestOptions = PHImageRequestOptions().apply {
-            synchronous = false
-            networkAccessAllowed = true
-            deliveryMode = PHImageRequestOptionsDeliveryModeOpportunistic
-            resizeMode = PHImageRequestOptionsResizeModeFast
-        }
+private suspend fun loadIosThumbnail(asset: PHAsset): ImageBitmap? =
+    withContext(Dispatchers.Default) {
+        suspendCancellableCoroutine { continuation ->
+            val requestOptions =
+                PHImageRequestOptions().apply {
+                    synchronous = false
+                    networkAccessAllowed = true
+                    deliveryMode = PHImageRequestOptionsDeliveryModeOpportunistic
+                    resizeMode = PHImageRequestOptionsResizeModeFast
+                }
 
-        val requestId = imageManager.requestImageForAsset(
-            asset = asset,
-            targetSize = CGSizeMake(360.0, 360.0),
-            contentMode = PHImageContentModeAspectFill,
-            options = requestOptions
-        ) { image, _ ->
-            if (continuation.isCompleted) {
-                return@requestImageForAsset
+            val requestId =
+                imageManager.requestImageForAsset(
+                    asset = asset,
+                    targetSize = CGSizeMake(360.0, 360.0),
+                    contentMode = PHImageContentModeAspectFill,
+                    options = requestOptions,
+                ) { image, _ ->
+                    if (continuation.isCompleted) {
+                        return@requestImageForAsset
+                    }
+
+                    val data = image?.let { UIImagePNGRepresentation(it) }
+                    val bitmap =
+                        data
+                            ?.toByteArray()
+                            ?.let { bytes -> runCatching { SkiaImage.makeFromEncoded(bytes).toComposeImageBitmap() }.getOrNull() }
+                    continuation.resume(bitmap)
+                }
+
+            continuation.invokeOnCancellation {
+                imageManager.cancelImageRequest(requestId)
             }
-
-            val data = image?.let { UIImagePNGRepresentation(it) }
-            val bitmap = data
-                ?.toByteArray()
-                ?.let { bytes -> runCatching { SkiaImage.makeFromEncoded(bytes).toComposeImageBitmap() }.getOrNull() }
-            continuation.resume(bitmap)
-        }
-
-        continuation.invokeOnCancellation {
-            imageManager.cancelImageRequest(requestId)
         }
     }
-}
 
 @OptIn(ExperimentalForeignApi::class)
 private fun NSData.toByteArray(): ByteArray {
@@ -200,4 +206,3 @@ private fun NSData.toByteArray(): ByteArray {
         }
     }
 }
-

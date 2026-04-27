@@ -17,21 +17,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
-
 import mobilefinal.composeapp.generated.resources.Res
 import mobilefinal.composeapp.generated.resources.compose_multiplatform
 import mobilefinal.composeapp.generated.resources.home_button
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun HomeScreen() {
     var showContent by remember { mutableStateOf(false) }
     Column(
-        modifier = Modifier
-            .background(MaterialTheme.colorScheme.primaryContainer)
-            .safeContentPadding()
-            .fillMaxSize(),
+        modifier =
+            Modifier
+                .background(MaterialTheme.colorScheme.primaryContainer)
+                .safeContentPadding()
+                .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Button(onClick = { showContent = !showContent }) {
@@ -47,4 +47,3 @@ fun HomeScreen() {
         }
     }
 }
-
