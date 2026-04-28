@@ -1,8 +1,6 @@
-@file:Suppress("ktlint:standard:function-naming")
-
 package moravian.mobileclass.mobilefinal
 
 import androidx.compose.runtime.Composable
 
 @Composable
-expect fun CameraScreen()
+expect fun MapScreen()

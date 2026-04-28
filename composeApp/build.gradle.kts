@@ -30,6 +30,7 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.activity.compose)
+            implementation("org.osmdroid:osmdroid-android:6.1.20")
         }
         commonMain.dependencies {
             implementation(libs.compose.runtime)

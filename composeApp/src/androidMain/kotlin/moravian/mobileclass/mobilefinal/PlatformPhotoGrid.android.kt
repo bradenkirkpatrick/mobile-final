@@ -1,3 +1,5 @@
+@file:Suppress("ktlint:standard:function-naming")
+
 package moravian.mobileclass.mobilefinal
 
 import android.content.ContentUris
@@ -40,10 +42,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import mobilefinal.composeapp.generated.resources.Res
-import mobilefinal.composeapp.generated.resources.photos_empty_message
-import mobilefinal.composeapp.generated.resources.photos_empty_title
-import org.jetbrains.compose.resources.stringResource
 
 data class LocalPhoto(
     val id: Long,

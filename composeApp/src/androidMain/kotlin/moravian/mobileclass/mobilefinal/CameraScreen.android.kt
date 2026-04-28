@@ -1,3 +1,5 @@
+@file:Suppress("ktlint:standard:function-naming")
+
 package moravian.mobileclass.mobilefinal
 
 import android.Manifest
@@ -77,6 +79,7 @@ actual fun CameraScreen() {
             } else if (photoUri != null) {
                 context.contentResolver.delete(photoUri, null, null)
             }
+            @Suppress("UNUSED_VALUE")
             pendingCaptureUri = null
         }
 
@@ -199,7 +202,10 @@ private fun createImageUri(context: Context): Uri? {
     return context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
 }
 
-private fun loadPreviewBitmap(context: Context, uri: Uri): ImageBitmap? =
+private fun loadPreviewBitmap(
+    context: Context,
+    uri: Uri,
+): ImageBitmap? =
     try {
         val bitmap =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -209,6 +215,6 @@ private fun loadPreviewBitmap(context: Context, uri: Uri): ImageBitmap? =
             }
         bitmap?.asImageBitmap()
     } catch (_: Exception) {
+        print("Error loading captured image preview")
         null
     }
-

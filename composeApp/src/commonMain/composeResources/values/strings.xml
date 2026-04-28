@@ -3,8 +3,10 @@
     <!-- Navigation -->
     <string name="nav_home">Home</string>
     <string name="nav_photos">Photos</string>
+    <string name="nav_map">Map</string>
     <string name="nav_home_icon">🏠</string>
     <string name="nav_photos_icon">📷</string>
+    <string name="nav_map_icon">🗺️</string>
 
     <!-- Home Screen -->
     <string name="home_button">Click me!</string>
@@ -25,6 +27,12 @@
     <string name="camera_permission_title">Camera Access Needed</string>
     <string name="camera_permission_rationale">Please grant permission to use the camera.</string>
     <string name="camera_permission_button">Grant Permission</string>
+
+    <!-- Map Screen -->
+    <string name="map_title">Map</string>
+    <string name="map_permission_title">Location Access Needed</string>
+    <string name="map_permission_rationale">Please grant location permission to center the map on your current GPS location.</string>
+    <string name="map_permission_button">Grant Location Permission</string>
 
     <!-- Permission Prompt -->
     <string name="permission_icon">📷</string>

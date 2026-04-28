@@ -8,5 +8,7 @@
 	<string>This app needs access to your photo library to display your photos.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>This app needs access to your camera to take photos.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app needs your location to center the map on your current position.</string>
 </dict>
 </plist>
