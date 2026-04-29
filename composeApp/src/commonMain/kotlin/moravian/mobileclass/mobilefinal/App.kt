@@ -24,6 +24,8 @@ import kotlinx.serialization.Serializable
 import mobilefinal.composeapp.generated.resources.Res
 import mobilefinal.composeapp.generated.resources.nav_camera
 import mobilefinal.composeapp.generated.resources.nav_camera_icon
+import mobilefinal.composeapp.generated.resources.nav_credits
+import mobilefinal.composeapp.generated.resources.nav_credits_icon
 import mobilefinal.composeapp.generated.resources.nav_home
 import mobilefinal.composeapp.generated.resources.nav_home_icon
 import mobilefinal.composeapp.generated.resources.nav_map
@@ -44,6 +46,9 @@ object MapRoute
 @Serializable
 object CameraRoute
 
+@Serializable
+object CreditsRoute
+
 @Composable
 @Preview
 fun App() {
@@ -61,6 +66,7 @@ fun App() {
                         val photosSelected = currentDestination?.hasRoute<PhotosRoute>() == true
                         val mapSelected = currentDestination?.hasRoute<MapRoute>() == true
                         val cameraSelected = currentDestination?.hasRoute<CameraRoute>() == true
+                        val creditsSelected = currentDestination?.hasRoute<CreditsRoute>() == true
                         NavigationRailItem(
                             selected = homeSelected,
                             enabled = !homeSelected,
@@ -109,6 +115,18 @@ fun App() {
                             icon = { Text(stringResource(Res.string.nav_map_icon)) },
                             label = { Text(stringResource(Res.string.nav_map)) },
                         )
+                        NavigationRailItem(
+                            selected = creditsSelected,
+                            enabled = !creditsSelected,
+                            onClick = {
+                                navController.navigate(CreditsRoute) {
+                                    popUpTo(HomeRoute) { inclusive = false }
+                                    launchSingleTop = true
+                                }
+                            },
+                            icon = { Text(stringResource(Res.string.nav_credits_icon)) },
+                            label = { Text(stringResource(Res.string.nav_credits)) },
+                        )
                     }
                     NavHost(
                         navController = navController,
@@ -119,6 +137,7 @@ fun App() {
                         composable<PhotosRoute> { PhotoScreen() }
                         composable<CameraRoute> { CameraScreen() }
                         composable<MapRoute> { MapScreen() }
+                        composable<CreditsRoute> { CreditsScreen() }
                     }
                 }
             } else {
@@ -129,6 +148,7 @@ fun App() {
                             val photosSelected = currentDestination?.hasRoute<PhotosRoute>() == true
                             val mapSelected = currentDestination?.hasRoute<MapRoute>() == true
                             val cameraSelected = currentDestination?.hasRoute<CameraRoute>() == true
+                            val creditsSelected = currentDestination?.hasRoute<CreditsRoute>() == true
                             NavigationBarItem(
                                 selected = homeSelected,
                                 enabled = !homeSelected,
@@ -177,6 +197,18 @@ fun App() {
                                 icon = { Text(stringResource(Res.string.nav_map_icon)) },
                                 label = { Text(stringResource(Res.string.nav_map)) },
                             )
+                            NavigationBarItem(
+                                selected = creditsSelected,
+                                enabled = !creditsSelected,
+                                onClick = {
+                                    navController.navigate(CreditsRoute) {
+                                        popUpTo(HomeRoute) { inclusive = false }
+                                        launchSingleTop = true
+                                    }
+                                },
+                                icon = { Text(stringResource(Res.string.nav_credits_icon)) },
+                                label = { Text(stringResource(Res.string.nav_credits)) },
+                            )
                         }
                     },
                 ) { innerPadding ->
@@ -189,6 +221,7 @@ fun App() {
                         composable<PhotosRoute> { PhotoScreen() }
                         composable<CameraRoute> { CameraScreen() }
                         composable<MapRoute> { MapScreen() }
+                        composable<CreditsRoute> { CreditsScreen() }
                     }
                 }
             }

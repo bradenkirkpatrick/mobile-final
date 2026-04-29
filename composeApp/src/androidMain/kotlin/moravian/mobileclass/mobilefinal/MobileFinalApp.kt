@@ -7,6 +7,7 @@ import org.osmdroid.config.Configuration
 class MobileFinalApp : Application() {
     override fun onCreate() {
         super.onCreate()
+        initKoin()
         // Initialize OsmDroid configuration as early as possible.
         // This is required for tile downloads (including DNS resolution) to work reliably.
         val config = Configuration.getInstance()

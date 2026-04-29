@@ -20,12 +20,15 @@ import androidx.compose.ui.Modifier
 import mobilefinal.composeapp.generated.resources.Res
 import mobilefinal.composeapp.generated.resources.compose_multiplatform
 import mobilefinal.composeapp.generated.resources.home_button
+import mobilefinal.composeapp.generated.resources.home_platform
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.koinInject
 
 @Composable
 fun HomeScreen() {
     var showContent by remember { mutableStateOf(false) }
+    val platform = koinInject<Platform>()
     Column(
         modifier =
             Modifier
@@ -37,6 +40,10 @@ fun HomeScreen() {
         Button(onClick = { showContent = !showContent }) {
             Text(stringResource(Res.string.home_button))
         }
+        Text(
+            text = stringResource(Res.string.home_platform, platform.name),
+            modifier = Modifier.fillMaxWidth(),
+        )
         AnimatedVisibility(showContent) {
             Column(
                 modifier = Modifier.fillMaxWidth(),

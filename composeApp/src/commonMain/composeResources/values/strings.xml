@@ -4,12 +4,15 @@
     <string name="nav_home">Home</string>
     <string name="nav_photos">Photos</string>
     <string name="nav_map">Map</string>
+    <string name="nav_credits">Credits</string>
     <string name="nav_home_icon">🏠</string>
     <string name="nav_photos_icon">📷</string>
     <string name="nav_map_icon">🗺️</string>
+    <string name="nav_credits_icon">ℹ️</string>
 
     <!-- Home Screen -->
     <string name="home_button">Click me!</string>
+    <string name="home_platform">Running on %1$s</string>
 
     <!-- Photo Screen -->
     <string name="photos_title">Photos</string>
@@ -23,13 +26,16 @@
     <string name="nav_camera">Camera</string>
     <string name="nav_camera_icon">📸</string>
     <string name="camera_title">Take a Photo</string>
+    <string name="camera_ready">📷 Camera ready</string>
     <string name="camera_capture_button">Capture</string>
+    <string name="camera_retake_button">Retake</string>
     <string name="camera_permission_title">Camera Access Needed</string>
     <string name="camera_permission_rationale">Please grant permission to use the camera.</string>
     <string name="camera_permission_button">Grant Permission</string>
 
     <!-- Map Screen -->
     <string name="map_title">Map</string>
+    <string name="map_coordinates">Lat: %1$s, Lon: %2$s</string>
     <string name="map_permission_title">Location Access Needed</string>
     <string name="map_permission_rationale">Please grant location permission to center the map on your current GPS location.</string>
     <string name="map_permission_button">Grant Location Permission</string>
@@ -39,4 +45,12 @@
     <string name="permission_title">Photo Access Needed</string>
     <string name="permission_rationale">Please grant permission to view your photos.</string>
     <string name="permission_button">Grant Permission</string>
+
+    <!-- Credits Screen -->
+    <string name="credits_title">Credits</string>
+    <string name="credits_member_braden">Braden Kirkpatrick</string>
+    <string name="credits_member_finn">Finn Dempsey</string>
+    <string name="credits_source_note">Icon photo source:</string>
+    <string name="credits_source_url">https://ramenparados.com/el-anime-mono-se-estrenara-en-abril-de-2025/</string>
+    <string name="credits_source_button">Open Source Website</string>
 </resources>

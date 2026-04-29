@@ -41,17 +41,21 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import mobilefinal.composeapp.generated.resources.Res
 import mobilefinal.composeapp.generated.resources.camera_capture_button
+import mobilefinal.composeapp.generated.resources.camera_ready
+import mobilefinal.composeapp.generated.resources.camera_retake_button
 import mobilefinal.composeapp.generated.resources.camera_permission_button
 import mobilefinal.composeapp.generated.resources.camera_permission_rationale
 import mobilefinal.composeapp.generated.resources.camera_permission_title
 import mobilefinal.composeapp.generated.resources.camera_title
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.koinInject
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 @Composable
 actual fun CameraScreen() {
+    val cameraConfig = koinInject<CameraConfig>()
     val context = LocalContext.current
     var hasPermission by remember {
         mutableStateOf(
@@ -155,7 +159,7 @@ actual fun CameraScreen() {
                     onClick = { capturedImage = null },
                     modifier = Modifier.padding(top = 16.dp),
                 ) {
-                    Text("Retake")
+                    Text(stringResource(Res.string.camera_retake_button))
                 }
             }
         } else {
@@ -168,14 +172,14 @@ actual fun CameraScreen() {
                 verticalArrangement = Arrangement.Center,
             ) {
                 Text(
-                    text = "📷 Camera ready",
+                    text = stringResource(Res.string.camera_ready),
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center,
                 )
                 Button(
                     onClick = {
-                        val outputUri = createImageUri(context) ?: return@Button
+                        val outputUri = createImageUri(context, cameraConfig) ?: return@Button
                         pendingCaptureUri = outputUri
                         cameraLauncher.launch(outputUri)
                     },
@@ -188,14 +192,17 @@ actual fun CameraScreen() {
     }
 }
 
-private fun createImageUri(context: Context): Uri? {
+private fun createImageUri(
+    context: Context,
+    cameraConfig: CameraConfig,
+): Uri? {
     val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
     val values =
         ContentValues().apply {
             put(MediaStore.Images.Media.DISPLAY_NAME, "IMG_$timestamp.jpg")
             put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                put(MediaStore.Images.Media.RELATIVE_PATH, "${Environment.DIRECTORY_PICTURES}/MobileFinal")
+                put(MediaStore.Images.Media.RELATIVE_PATH, "${Environment.DIRECTORY_PICTURES}/${cameraConfig.photoDirectory}")
             }
         }
 

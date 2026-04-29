@@ -42,6 +42,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import mobilefinal.composeapp.generated.resources.Res
+import mobilefinal.composeapp.generated.resources.photos_empty_message
+import mobilefinal.composeapp.generated.resources.photos_empty_title
+import org.jetbrains.compose.resources.stringResource
 
 data class LocalPhoto(
     val id: Long,
@@ -68,13 +72,13 @@ actual fun PlatformPhotoGrid() {
                 verticalArrangement = Arrangement.Center,
             ) {
                 Text(
-                    text = "No Photos Found",
+                    text = stringResource(Res.string.photos_empty_title),
                     style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center,
                 )
                 Text(
-                    text = "Your library appears empty, or photos are unavailable right now.",
+                    text = stringResource(Res.string.photos_empty_message),
                     style = MaterialTheme.typography.bodyMedium,
                     modifier =
                         Modifier

@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.cinterop.ExperimentalForeignApi
 import mobilefinal.composeapp.generated.resources.Res
 import mobilefinal.composeapp.generated.resources.camera_capture_button
+import mobilefinal.composeapp.generated.resources.camera_ready
 import mobilefinal.composeapp.generated.resources.camera_permission_button
 import mobilefinal.composeapp.generated.resources.camera_permission_rationale
 import mobilefinal.composeapp.generated.resources.camera_permission_title
@@ -30,6 +31,8 @@ import org.jetbrains.compose.resources.stringResource
 import platform.AVFoundation.AVAuthorizationStatusAuthorized
 import platform.AVFoundation.AVCaptureDevice
 import platform.AVFoundation.AVMediaTypeVideo
+import platform.AVFoundation.authorizationStatusForMediaType
+import platform.AVFoundation.requestAccessForMediaType
 import platform.darwin.dispatch_async
 import platform.darwin.dispatch_get_main_queue
 
@@ -38,7 +41,7 @@ import platform.darwin.dispatch_get_main_queue
 actual fun CameraScreen() {
     var hasPermission by remember {
         mutableStateOf(
-            AVCaptureDevice.authorizationStatus(forMediaType = AVMediaTypeVideo) == AVAuthorizationStatusAuthorized,
+            AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo) == AVAuthorizationStatusAuthorized,
         )
     }
 
@@ -87,7 +90,7 @@ actual fun CameraScreen() {
                 )
                 Button(
                     onClick = {
-                        AVCaptureDevice.requestAccess(forMediaType = AVMediaTypeVideo) { granted: Boolean ->
+                        AVCaptureDevice.requestAccessForMediaType(AVMediaTypeVideo) { granted: Boolean ->
                             dispatch_async(dispatch_get_main_queue()) {
                                 hasPermission = granted
                             }
@@ -108,7 +111,7 @@ actual fun CameraScreen() {
                 verticalArrangement = Arrangement.Center,
             ) {
                 Text(
-                    text = "📷 Camera ready",
+                    text = stringResource(Res.string.camera_ready),
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center,
