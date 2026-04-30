@@ -61,6 +61,7 @@ fun App() {
 
             if (isLandscape) {
                 Row(modifier = Modifier.fillMaxSize()) {
+                    if (currentDestination?.hasRoute<HomeRoute>() != true) {
                     NavigationRail {
                         val homeSelected = currentDestination?.hasRoute<HomeRoute>() == true
                         val photosSelected = currentDestination?.hasRoute<PhotosRoute>() == true
@@ -127,7 +128,7 @@ fun App() {
                             icon = { Text(stringResource(Res.string.nav_credits_icon)) },
                             label = { Text(stringResource(Res.string.nav_credits)) },
                         )
-                    }
+                    }}
                     NavHost(
                         navController = navController,
                         startDestination = HomeRoute,
@@ -143,6 +144,7 @@ fun App() {
             } else {
                 Scaffold(
                     bottomBar = {
+                        if (currentDestination?.hasRoute<HomeRoute>() != true) {
                         NavigationBar {
                             val homeSelected = currentDestination?.hasRoute<HomeRoute>() == true
                             val photosSelected = currentDestination?.hasRoute<PhotosRoute>() == true
@@ -209,7 +211,7 @@ fun App() {
                                 icon = { Text(stringResource(Res.string.nav_credits_icon)) },
                                 label = { Text(stringResource(Res.string.nav_credits)) },
                             )
-                        }
+                        }}
                     },
                 ) { innerPadding ->
                     NavHost(
